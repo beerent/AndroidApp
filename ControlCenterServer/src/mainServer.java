@@ -42,6 +42,7 @@ public class mainServer {
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			note = in.readLine();
 			analyzeNote(note);
+			out.println("done");
 		}catch(Exception e){
 			System.out.println("socket IO error.");
 		}
