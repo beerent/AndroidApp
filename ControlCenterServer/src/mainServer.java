@@ -8,7 +8,8 @@ import java.net.Socket;
 public class mainServer {
 	private final static int PORT = 10017;
 	private ServerSocket server;
-
+	private final String TERMINATE_KEY = "server.close";
+	
 	private boolean serverOn;
 
 	public mainServer() {
@@ -48,10 +49,17 @@ public class mainServer {
 		}
 	}
 	
-	public void analyzeNote(String note){
-		System.out.println(note);		
+	private void analyzeNote(String note){
+		note = note.toLowerCase();
+		System.out.println("MESSAGE FROM USER: " + note);
+		if(note.equals(TERMINATE_KEY))serverOn = false;
+		else if(note.contains("hw") || note.contains("homework")) addHomeworkAssignment(note);
 	}
 
+	public void addHomeworkAssignment(String note){
+		
+	}
+	
 	public static void main(String[] args) {
 		new mainServer();
 	}
