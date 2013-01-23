@@ -22,10 +22,8 @@ public final class R {
         public static final int violet=0x7f020000;
     }
     public static final class id {
-        public static final int back=0x7f070001;
-        public static final int clear=0x7f070003;
         public static final int editor=0x7f070000;
-        public static final int image=0x7f070002;
+        public static final int image=0x7f070001;
     }
     public static final class layout {
         public static final int skeleton_activity=0x7f030000;

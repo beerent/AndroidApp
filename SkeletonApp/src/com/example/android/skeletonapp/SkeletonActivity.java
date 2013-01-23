@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2007 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.android.skeletonapp;
 
 import android.app.Activity;
@@ -25,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 /**
  * This class provides a basic demonstration of how to write an Android
@@ -36,6 +21,7 @@ public class SkeletonActivity extends Activity {
     static final private int BACK_ID = Menu.FIRST;
     static final private int CLEAR_ID = Menu.FIRST + 1;
 
+    private SkeletonActivity sk;
     private EditText mEditor;
     
     public SkeletonActivity() {
@@ -51,11 +37,12 @@ public class SkeletonActivity extends Activity {
 
         // Find the text editor view inside the layout, because we
         // want to do various programmatic things with it.
+        this.sk = this;
         mEditor = (EditText) findViewById(R.id.editor);
 
         // Hook up button presses to the appropriate event handler.
-        ((Button) findViewById(R.id.back)).setOnClickListener(mBackListener);
-        ((Button) findViewById(R.id.clear)).setOnClickListener(mClearListener);
+       // ((Button) findViewById(R.id.back)).setOnClickListener(mBackListener);
+        ((ImageButton) findViewById(R.id.image)).setOnClickListener(mClearListener);
         
         mEditor.setText(getText(R.string.main_label));
     }
@@ -116,20 +103,11 @@ public class SkeletonActivity extends Activity {
     }
 
     /**
-     * A call-back for when the user presses the back button.
-     */
-    OnClickListener mBackListener = new OnClickListener() {
-        public void onClick(View v) {
-            finish();
-        }
-    };
-
-    /**
      * A call-back for when the user presses the clear button.
      */
     OnClickListener mClearListener = new OnClickListener() {
         public void onClick(View v) {
-            mEditor.setText("");
+            new sender(sk).execute(mEditor.getText().toString());;
         }
     };
 }
