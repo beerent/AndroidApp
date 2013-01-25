@@ -98,12 +98,12 @@ public class HomeworkManager {
 	}
 	
 	private void clearHomework(){
-		
+		homeworkList = new String [MAX];
+		writeAssignments();
 	}
 	
 	public static void main(String[] args) {
 		HomeworkManager hm = new HomeworkManager();
-		hm.addAssignment("test 1");
-		hm.removeAssignment("3");
+		hm.clearHomework();
 	}
 }
