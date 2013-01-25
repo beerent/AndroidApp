@@ -35,7 +35,11 @@ public class HomeworkManager {
 			f = new File(homeworkPath);
 			sc = new Scanner(f);
 			while(sc.hasNextLine()){
-				homeworkList[count] = sc.nextLine();
+				String next = sc.nextLine();
+				if(next.substring(0,2).equals("id"))
+					homeworkList[count] = next.substring(5 + ("" + count).length());
+				else
+					homeworkList[count]=next;
 				count++;
 				size++;
 			}
@@ -62,12 +66,17 @@ public class HomeworkManager {
 		try{
 			int id = Integer.parseInt(target);
 			if(id<size && id >= 0){
+				System.out.println("removing " + homeworkList[id]);
 				for(int i = id; i < size; i++){
+					System.out.println("replacing " + homeworkList[i] + " with " + homeworkList[i+1]);
 					homeworkList[i] = homeworkList[i+1];
 				}
 			}
+			writeAssignments();
 		}catch(Exception e){
-			
+			for(int i = 0; i < size; i++){
+				if(homeworkList[i].equals(target)) removeAssignment("" + i);
+			}
 		}
 		
 	}
@@ -95,7 +104,6 @@ public class HomeworkManager {
 	public static void main(String[] args) {
 		HomeworkManager hm = new HomeworkManager();
 		hm.addAssignment("test 1");
-		hm.addAssignment("");
-		hm.displayHomework();
+		hm.removeAssignment("3");
 	}
 }
