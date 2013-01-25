@@ -7,6 +7,9 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class HomeworkManager {
+	private static final int MAX= 25;
+	private String [] homeworkList;
+	private int size;
 	private String homeworkPath;
 	
 	public HomeworkManager(){
@@ -14,32 +17,58 @@ public class HomeworkManager {
 	}
 	
 	public void addAssignment(String newAssignment){
+		if(newAssignment.length() >= 1){ 
+			setAssignments();
+			homeworkList[size] = newAssignment;
+			writeAssignments();
+		}
+	}
+	
+	private void setAssignments(){
 		File f;
 		Scanner sc;
 		PrintWriter out;
 		int count = 0;
-		String [] homeworkList = new String [25];
+		size = 0;
+		homeworkList = new String [25];
 		try {
 			f = new File(homeworkPath);
 			sc = new Scanner(f);
-			String list = "";
 			while(sc.hasNextLine()){
 				homeworkList[count] = sc.nextLine();
 				count++;
+				size++;
 			}
-			homeworkList[count] = newAssignment;
-			sc.close(); //properly close file
-			out = new PrintWriter(new FileWriter(homeworkPath));
-			for(int i = 0; i < count-1; i++){
-				
+		}catch(Exception e){		
+		}		
+	}
+	
+	private void writeAssignments(){ 
+		try{
+			PrintWriter out = new PrintWriter(new FileWriter(homeworkPath));
+			for(int i = 0; i < homeworkList.length; i++){
+			if(homeworkList[i] == null) break;
+			if(homeworkList[i].length() < 1) continue;
+			out.write("id " + i + ": " + homeworkList[i] + "\n");
 			}
 			out.close();
-		} catch (IOException e) {
-			System.err.println("ERROR IN: addAssignment(String newAssignment)");
+		}catch(Exception e){
+			
 		}
 	}
 	
-	public void removeAssignment(){
+	public void removeAssignment(String target){
+		setAssignments();
+		try{
+			int id = Integer.parseInt(target);
+			if(id<size && id >= 0){
+				for(int i = id; i < size; i++){
+					homeworkList[i] = homeworkList[i+1];
+				}
+			}
+		}catch(Exception e){
+			
+		}
 		
 	}
 	
@@ -58,10 +87,15 @@ public class HomeworkManager {
 			
 		}
 	}
+	
+	private void clearHomework(){
+		
+	}
+	
 	public static void main(String[] args) {
 		HomeworkManager hm = new HomeworkManager();
 		hm.addAssignment("test 1");
-		hm.addAssignment("test 2");
+		hm.addAssignment("");
 		hm.displayHomework();
 	}
 }
