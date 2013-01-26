@@ -41,7 +41,6 @@ public class sender extends AsyncTask<String, Void, String> {
 	}
 	
 	private String analyzeResponse(String response) {
-		return response;
 	}
 
 	protected void onPostExecute(String response) {
