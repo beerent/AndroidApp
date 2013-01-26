@@ -5,15 +5,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.Timer;
 
 public class HomeworkManager {
 	private static final int MAX= 25;
 	private String [] homeworkList;
 	private int size;
 	private String homeworkPath;
+	private Timer timer;
 	
 	public HomeworkManager(){
 		homeworkPath = "src/subClasses/resources/homework.hmk";
+		timer = new Timer();
 	}
 	
 	public void addAssignment(String newAssignment){
@@ -88,12 +91,17 @@ public class HomeworkManager {
 	private void displayHomework(){
 		File f;
 		Scanner sc;
-		try {
-			f = new File(homeworkPath);
-			sc = new Scanner(f);
-			while(sc.hasNextLine()) System.out.println(sc.nextLine());			
-		}catch(Exception e){
-			
+		while(true){
+			try {
+				f = new File(homeworkPath);
+				sc = new Scanner(f);
+				while(sc.hasNextLine()) System.out.println(sc.nextLine());
+				sc.close();
+		        Thread.sleep(5000);
+				for(int i = 0; i < 10; i++) System.out.println("");
+			}catch(Exception e){
+				System.out.println("displayHomework() error");
+			}
 		}
 	}
 	
@@ -104,6 +112,6 @@ public class HomeworkManager {
 	
 	public static void main(String[] args) {
 		HomeworkManager hm = new HomeworkManager();
-		hm.clearHomework();
+		hm.displayHomework();
 	}
 }

@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import subClasses.HomeworkManager;
+
 public class mainServer {
 	private final static int PORT = 10017;
 	private ServerSocket server;
@@ -62,7 +64,11 @@ public class mainServer {
 		
 	}
 	
+	
+	
 	public static void main(String[] args) {
-		new mainServer();
+		HomeworkManager hm = new HomeworkManager();
+		hm.removeAssignment("0");
+		//new mainServer();
 	}
 }
