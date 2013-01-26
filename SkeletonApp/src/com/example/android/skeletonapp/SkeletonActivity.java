@@ -17,7 +17,7 @@ public class SkeletonActivity extends Activity {
     static final private int CLEAR_ID = Menu.FIRST + 1;
 
     private SkeletonActivity sk;
-    private EditText mEditor;
+    public EditText mEditor;
     
     public SkeletonActivity() {
     }

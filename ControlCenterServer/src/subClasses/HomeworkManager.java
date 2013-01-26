@@ -90,13 +90,15 @@ public class HomeworkManager {
 		
 	}
 	
-	private String getList(){
+	public String getList(){
 		String list = "";
 		setAssignments();
 		for(int i = 0; i < size; i ++) list +=homeworkList[i] + "\n"; 
 		return list;
 	}
 	
+	//method prints the entire list of homework
+	//thread sleeps for 5 minutes (hard-coded)
 	private void displayHomework(){
 		File f;
 		Scanner sc;
@@ -114,11 +116,13 @@ public class HomeworkManager {
 		}
 	}
 	
+	//completely clears homework.hwk 
 	private void clearHomework(){
 		homeworkList = new String [MAX];
 		writeAssignments();
 	}
 	
+	//if main is running, displayHomework() is ran
 	public static void main(String[] args) {
 		HomeworkManager hm = new HomeworkManager();
 		hm.displayHomework();

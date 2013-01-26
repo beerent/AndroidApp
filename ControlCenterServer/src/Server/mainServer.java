@@ -1,5 +1,4 @@
 package Server;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +12,8 @@ public class mainServer {
 	private final static int PORT = 10017;
 	private ServerSocket server;
 	private final String TERMINATE_KEY = "server.close";
+	private PrintWriter out;
+	private BufferedReader in;
 	
 	private boolean serverOn;
 
@@ -25,9 +26,14 @@ public class mainServer {
 		}
 		runServer();
 	}
+	
+	private void announce(String announcement){
+		System.out.println("SERVER: " + announcement);
+	}
 
 	private void runServer() {
 		Socket socket;
+		announce("server on.");
 		while (serverOn) {
 			try {
 				socket = server.accept();
@@ -36,11 +42,10 @@ public class mainServer {
 				e.printStackTrace();
 			}
 		}
+		announce("server off.");
 	}
 
 	private void newConnection(Socket socket){
-		PrintWriter out;
-		BufferedReader in;
 		String note;
 		try{
 			out = new PrintWriter(socket.getOutputStream(), true);
@@ -57,14 +62,18 @@ public class mainServer {
 		note = note.toLowerCase();
 		System.out.println("MESSAGE FROM USER: " + note);
 		if(note.equals(TERMINATE_KEY))serverOn = false;
-		else if(note.contains("hw") || note.contains("homework")) addHomeworkAssignment(note);
+		else if(note.contains("hw") || note.contains("homework")){
+			if(note.endsWith("returnlist")){
+				out.write(new HomeworkManager().getList());
+			}else{ 
+				addHomeworkAssignment(note);
+			}
+		}
 	}
 
 	public void addHomeworkAssignment(String note){
-		new HomeworkManager().addAssignment(note.substring(8));
+		new HomeworkManager().addAssignment(note.substring(9));
 	}
-	
-	
 	
 	public static void main(String[] args) {
 		new mainServer();
