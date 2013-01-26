@@ -61,14 +61,12 @@ public class mainServer {
 	}
 
 	public void addHomeworkAssignment(String note){
-		
+		new HomeworkManager().addAssignment(note.substring(8));
 	}
 	
 	
 	
 	public static void main(String[] args) {
-		HomeworkManager hm = new HomeworkManager();
-		hm.removeAssignment("0");
-		//new mainServer();
+		new mainServer();
 	}
 }
