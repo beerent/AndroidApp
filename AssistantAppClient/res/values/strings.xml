@@ -20,19 +20,13 @@
 <resources>
     
     <string-array name="Planets">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-        <item>Pluto</item>
+        <item>Homework</item>
+        <item>get .mp3</item>
     </string-array>
-    <string name="planet_prompt">Select a planet</string>
+    <string name="planet_prompt">Select an option</string>
+    
     <!-- Simple strings. -->
-    <string name="skeleton_app">Skeleton App</string>
+    <string name="skeleton_app">AssistantApp</string>
     <string name="back">Back</string>
     <string name="clear">Clear</string>
 

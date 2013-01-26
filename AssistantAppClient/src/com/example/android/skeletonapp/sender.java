@@ -26,20 +26,22 @@ public class sender extends AsyncTask<String, Void, String> {
 			socket = new Socket("bdubdolla.dyndns.tv", 10017);
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			out.println("test");
 			String response = in.readLine();
-			sk.mEditor.setText(response);
+			analyzeResponse(response);			
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return "complete";
 	}
 	
+	private void analyzeResponse(String response) {
+		if((int)response.charAt(0)==0){
+		}
+	}
+
 	protected void onPostExecute(String response) {
 		Toast.makeText(sk.getApplicationContext(), response, Toast.LENGTH_LONG).show();
 	}

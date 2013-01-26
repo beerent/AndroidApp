@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class SkeletonActivity extends Activity {
     
@@ -110,9 +111,23 @@ public class SkeletonActivity extends Activity {
      */
     OnClickListener mClearListener = new OnClickListener() {
         public void onClick(View v) {
-            new sender(sk).execute(mEditor.getText().toString());
-            String spin=spinner.getSelectedItem().toString();
-            mEditor.setText(spin);
+        	int op = getCase(spinner.getSelectedItem().toString());
+        	if (op==-1) announce("failed to select option", true);
+        	else new sender(sk).execute(op + mEditor.getText().toString());
         }
     };
+    
+    private int getCase(String option){
+    	if(option.equals("Homework")){
+    		return 0;
+    	}else if(option.equals("get .mp3")){
+    		return 1;
+    	}
+    	return -1;
+    }
+    
+    private void announce(String note, Boolean length){
+    	if(length) Toast.makeText(sk.getApplicationContext(), note, Toast.LENGTH_LONG).show();
+    	else Toast.makeText(sk.getApplicationContext(), note, Toast.LENGTH_SHORT).show();
+    }
 }
