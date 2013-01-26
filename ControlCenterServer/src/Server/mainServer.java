@@ -42,7 +42,7 @@ public class mainServer {
 				e.printStackTrace();
 			}
 		}
-		announce("server off.");
+		announce("server off."); 
 	}
 
 	private void newConnection(Socket socket){
