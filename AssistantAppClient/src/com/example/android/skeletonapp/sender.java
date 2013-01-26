@@ -11,6 +11,7 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+@SuppressLint("NewApi")
 public class sender extends AsyncTask<String, Void, String> {
 	private Socket socket;
 	private PrintWriter out;
@@ -22,24 +23,29 @@ public class sender extends AsyncTask<String, Void, String> {
 	}
 	
 	protected String doInBackground(String... message) {
+		String response = "initial";
 		try {
 			socket = new Socket("bdubdolla.dyndns.tv", 10017);
-			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			String response = in.readLine();
-			analyzeResponse(response);			
+			return "conn";
+			//PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+			//in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			//out.println(message[0]);
+			//response = in.readLine();
+			// response = analyzeResponse(response);			
 		} catch (UnknownHostException e) {
-			e.printStackTrace();
+			return "fail UHE";
 		} catch (IOException e) {
-			e.printStackTrace();
+			return "fail IOE";
 		}
 		
-		return "complete";
+		//return response;
 	}
 	
-	private void analyzeResponse(String response) {
+	private String analyzeResponse(String response) {
 		if((int)response.charAt(0)==0){
+			return "hwk";
 		}
+		return "nub";
 	}
 
 	protected void onPostExecute(String response) {
