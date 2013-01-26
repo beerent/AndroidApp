@@ -62,6 +62,11 @@ public class mainServer {
 		note = note.toLowerCase();
 		System.out.println("MESSAGE FROM USER: " + note);
 		if(note.equals(TERMINATE_KEY))serverOn = false;
+		else if(note.contains("get song")){
+			
+		}else if(note.contains("download song")){
+			//todownload list
+		}
 		else if(note.contains("hw") || note.contains("homework")){
 			if(note.endsWith("returnlist")){
 				out.write(new HomeworkManager().getList());
