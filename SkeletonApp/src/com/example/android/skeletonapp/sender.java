@@ -26,7 +26,7 @@ public class sender extends AsyncTask<String, Void, String> {
 			socket = new Socket("bdubdolla.dyndns.tv", 10017);
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			out.println(message[0]);
+			out.println("test");
 			String response = in.readLine();
 			sk.mEditor.setText(response);
 		} catch (UnknownHostException e) {
