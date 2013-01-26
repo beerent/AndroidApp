@@ -3,6 +3,12 @@ package subClasses;
 import java.io.File;
 import java.util.ArrayList;
 
+/*
+ *
+ * This file is a simple directory traversal utility.
+ * 
+ */
+
 public class Dirtrav {
 	public String directory;
 	public File currentDir;
@@ -10,7 +16,8 @@ public class Dirtrav {
 	
 	public Dirtrav(String directory){
 		this.directory = directory;
-		currentDir = new File(System.getProperty("user.home") + directory);
+		currentDir = new File(System.getProperty("user.home") + "/" + directory);
+		System.out.println(currentDir.exists());
 		possibleFiles = new ArrayList<File>();
 	}
 	
@@ -39,9 +46,14 @@ public class Dirtrav {
 	
 	public ArrayList<File> traverseGrab(String target, File dir){
 		for (File file : dir.listFiles()){
-			if(file.getName().contains(target)) possibleFiles.add(file);
+			//System.out.println("viewing: " + file);
+			if(file.getName().toLowerCase().contains(target)) possibleFiles.add(file);
 			if (file.isDirectory()){
-				traverse(file);	
+				try{
+					traverseGrab(target, file);	
+				}catch(Exception e){
+					System.out.println("SYSTEM: couldnt search directory " + file.getName());
+				}
 			}
 		}
 		return possibleFiles;
@@ -52,8 +64,11 @@ public class Dirtrav {
 	}
 	
 	public static void main(String [] args){
-		Dirtrav dtrv = new Dirtrav("/Documents/website");
-		dtrv.traverseGrab("index", dtrv.getDir());
-		System.out.println("done");
+		Dirtrav dtrv = new Dirtrav("../../Volumes/Seagate");
+		ArrayList<File> af = dtrv.traverseGrab("My Life".toLowerCase(), dtrv.getDir());
+		for(int i = 0; i < af.size(); i++){
+			System.out.println("FOUND: " + af.get(i));
+		}
+		System.out.println("found " + af.size() + " files");
 	}
 }
