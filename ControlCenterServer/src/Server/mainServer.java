@@ -1,11 +1,14 @@
 package Server;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
+import subClasses.Dirtrav;
 import subClasses.HomeworkManager;
 
 public class mainServer {
@@ -63,7 +66,12 @@ public class mainServer {
 		System.out.println("MESSAGE FROM USER: " + note);
 		if(note.equals(TERMINATE_KEY))serverOn = false;
 		else if(note.contains("get song")){
-			
+			Dirtrav dr = new Dirtrav("../../Volumes/Seagate");
+			ArrayList<File> alf = dr.traverseGrab("bigfiles", dr.getDir());
+			System.out.println("respond with id#, or anything else to cancel.");
+			for(int i = 0; i < alf.size(); i++){
+				System.out.println("id: #" + i + "| " +alf.get(i).getName());
+			}
 		}else if(note.contains("download song")){
 			//todownload list
 		}

@@ -43,10 +43,6 @@ public class Dirtrav {
 			if (file.isDirectory()){
 				traverse(file);	
 			}
-			System.out.println("respond with id#, or anything else to cancel.");
-			for(int i = 0; i < possibleFiles.size(); i++){
-				System.out.println("id: #" + i + "| " +possibleFiles.get(i).getName());
-			}
 		}
 		return possibleFiles;
 	}
