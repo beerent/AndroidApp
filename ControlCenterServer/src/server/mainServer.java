@@ -1,10 +1,12 @@
-package server;
+package Server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import subClasses.HomeworkManager;
 
 public class mainServer {
 	private final static int PORT = 10017;
@@ -22,9 +24,14 @@ public class mainServer {
 		}
 		runServer();
 	}
+	
+	private void announce(String announcement){
+		System.out.println("SERVER: " + announcement);
+	}
 
 	private void runServer() {
 		Socket socket;
+		announce("server on.");
 		while (serverOn) {
 			try {
 				socket = server.accept();
@@ -58,7 +65,7 @@ public class mainServer {
 	}
 
 	public void addHomeworkAssignment(String note){
-		
+		new HomeworkManager().addAssignment(note.substring(9));
 	}
 	
 	public static void main(String[] args) {

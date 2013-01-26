@@ -16,6 +16,7 @@ public class HomeworkManager {
 	
 	public HomeworkManager(){
 		homeworkPath = "src/subClasses/resources/homework.hmk";
+		if(!new File(homeworkPath).exists()) homeworkPath = "resources/homework.hmk";
 		timer = new Timer();
 	}
 	
@@ -89,6 +90,13 @@ public class HomeworkManager {
 		
 	}
 	
+	private String getList(){
+		String list = "";
+		setAssignments();
+		for(int i = 0; i < size; i ++) list +=homeworkList[i] + "\n"; 
+		return list;
+	}
+	
 	private void displayHomework(){
 		File f;
 		Scanner sc;
@@ -98,7 +106,7 @@ public class HomeworkManager {
 				sc = new Scanner(f);
 				while(sc.hasNextLine()) System.out.println(sc.nextLine());
 				sc.close();
-		        Thread.sleep(5000);
+		        Thread.sleep(50000);
 				for(int i = 0; i < 10; i++) System.out.println("");
 			}catch(Exception e){
 				System.out.println("displayHomework() error");
