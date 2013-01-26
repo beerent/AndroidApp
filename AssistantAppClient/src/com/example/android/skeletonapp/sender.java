@@ -26,26 +26,22 @@ public class sender extends AsyncTask<String, Void, String> {
 		String response = "initial";
 		try {
 			socket = new Socket("bdubdolla.dyndns.tv", 10017);
-			return "conn";
-			//PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-			//in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			//out.println(message[0]);
-			//response = in.readLine();
-			// response = analyzeResponse(response);			
+			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			out.println(message[0]);
+			response = in.readLine();
+			response = analyzeResponse(response);			
 		} catch (UnknownHostException e) {
 			return "fail UHE";
 		} catch (IOException e) {
 			return "fail IOE";
 		}
 		
-		//return response;
+		return response;
 	}
 	
 	private String analyzeResponse(String response) {
-		if((int)response.charAt(0)==0){
-			return "hwk";
-		}
-		return "nub";
+		return response;
 	}
 
 	protected void onPostExecute(String response) {
