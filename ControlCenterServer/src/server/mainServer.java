@@ -1,5 +1,5 @@
 //main
-package server;
+package Server;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
