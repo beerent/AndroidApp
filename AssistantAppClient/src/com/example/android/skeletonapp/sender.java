@@ -35,12 +35,13 @@ public class sender extends AsyncTask<String, Void, String> {
 			return "fail UHE";
 		} catch (IOException e) {
 			return "fail IOE";
-		}
-		
+		}		
 		return response;
 	}
 	
 	private String analyzeResponse(String response) {
+		sk.mEditor.setText(response);
+		return null;
 	}
 
 	protected void onPostExecute(String response) {

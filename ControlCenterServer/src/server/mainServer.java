@@ -63,21 +63,26 @@ public class mainServer {
 	}
 
 	private void analyzeNote(String note){
-		note = note.toLowerCase();
-
+		int op = -1;
 		System.out.println("MESSAGE FROM USER: " + note);
-
-		if(note.equals(TERMINATE_KEY))serverOn = false;
-
-		else if(note.substring(0,2).equals("0")){
-			songRequest(note.substring(2));
+		note = note.toLowerCase();
+		try{
+			op = Integer.parseInt(note.substring(0,2));
+		}catch(Exception e){
+			System.out.println("illegal op code on note : " + note);
+			if(note.equals(TERMINATE_KEY))serverOn = false;
+			else return;
 		}
-		else if(note.contains("hw") || note.contains("homework")){
+		
+		if(op == 0){
 			if(note.endsWith("returnlist")){
 				out.write(new HomeworkManager().getList());
-			}else{ 
-				addHomeworkAssignment(note);
-			}
+			}else{
+			addHomeworkAssignment(note);
+			}	
+		}
+		else if(op == 1){
+			//songRequest(note.substring(2));
 		}
 	}
 	
