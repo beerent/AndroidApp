@@ -28,20 +28,19 @@ public class sender extends AsyncTask<String, Void, String> {
 			socket = new Socket("bdubdolla.dyndns.tv", 10017);
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			out.println(message[0]);
-			response = in.readLine();
-			response = analyzeResponse(response);			
+			out.println(message[0]); //send note with op code in front to server. 
+			response = in.readLine(); //read response from server. 
+			response = analyzeResponse(response); //analyze response from server. 	
 		} catch (UnknownHostException e) {
 			return "fail UHE";
 		} catch (IOException e) {
 			return "fail IOE";
 		}		
-		return response;
+		return response; //response from server printed on android screen.
 	}
 	
 	private String analyzeResponse(String response) {
-		sk.mEditor.setText(response);
-		return null;
+		return response;
 	}
 
 	protected void onPostExecute(String response) {

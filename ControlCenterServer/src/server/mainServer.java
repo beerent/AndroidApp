@@ -64,21 +64,25 @@ public class mainServer {
 
 	private void analyzeNote(String note){
 		int op = -1;
-		System.out.println("MESSAGE FROM USER: " + note);
 		note = note.toLowerCase();
+		System.out.println("MESSAGE FROM USER: " + note);
 		try{
+			op = Integer.parseInt(note.substring(0,1));
 			op = Integer.parseInt(note.substring(0,2));
 		}catch(Exception e){
-			System.out.println("illegal op code on note : " + note);
+			//System.out.println("illegal op code on note : " + note);
 			if(note.equals(TERMINATE_KEY))serverOn = false;
-			else return;
+			else if(op== -1) {
+				return;
+			}
 		}
 		
 		if(op == 0){
 			if(note.endsWith("returnlist")){
 				out.write(new HomeworkManager().getList());
 			}else{
-			addHomeworkAssignment(note);
+			addHomeworkAssignment(note, op);
+			out.println("added to Homework list.");
 			}	
 		}
 		else if(op == 1){
@@ -95,8 +99,9 @@ public class mainServer {
 		} 
 	}
 
-	public void addHomeworkAssignment(String note){
-		new HomeworkManager().addAssignment(note.substring(9));
+	public void addHomeworkAssignment(String note, int padding){
+		int size = (padding + "").length();
+		new HomeworkManager().addAssignment(note.substring(size));
 	}
 
 	public static void main(String[] args) {
