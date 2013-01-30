@@ -1,3 +1,4 @@
+//main
 package Server;
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,7 +18,7 @@ public class mainServer {
 	private final String TERMINATE_KEY = "server.close";
 	private PrintWriter out;
 	private BufferedReader in;
-	
+
 	private boolean serverOn;
 
 	public mainServer() {
@@ -29,7 +30,7 @@ public class mainServer {
 		}
 		runServer();
 	}
-	
+
 	private void announce(String announcement){
 		System.out.println("SERVER: " + announcement);
 	}
@@ -40,6 +41,7 @@ public class mainServer {
 		while (serverOn) {
 			try {
 				socket = server.accept();
+				System.out.println("new connection.");
 				newConnection(socket);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -55,39 +57,53 @@ public class mainServer {
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			note = in.readLine();
 			analyzeNote(note);
-			out.println("done");
 		}catch(Exception e){
 			System.out.println("socket IO error.");
 		}
 	}
-	
+
 	private void analyzeNote(String note){
+		int op = -1;
 		note = note.toLowerCase();
 		System.out.println("MESSAGE FROM USER: " + note);
-		if(note.equals(TERMINATE_KEY))serverOn = false;
-		else if(note.contains("get song")){
-			Dirtrav dr = new Dirtrav("../../Volumes/Seagate");
-			ArrayList<File> alf = dr.traverseGrab("bigfiles", dr.getDir());
-			System.out.println("respond with id#, or anything else to cancel.");
-			for(int i = 0; i < alf.size(); i++){
-				System.out.println("id: #" + i + "| " +alf.get(i).getName());
+		try{
+			op = Integer.parseInt(note.substring(0,1));
+			op = Integer.parseInt(note.substring(0,2));
+		}catch(Exception e){
+			//System.out.println("illegal op code on note : " + note);
+			if(note.equals(TERMINATE_KEY))serverOn = false;
+			else if(op== -1) {
+				return;
 			}
-		}else if(note.contains("download song")){
-			//todownload list
 		}
-		else if(note.contains("hw") || note.contains("homework")){
+		
+		if(op == 0){
 			if(note.endsWith("returnlist")){
-				out.write(new HomeworkManager().getList());
-			}else{ 
-				addHomeworkAssignment(note);
-			}
+				out.println(new HomeworkManager().getList());
+			}else{
+			addHomeworkAssignment(note, op);
+			out.println("added to Homework list.");
+			}	
 		}
-	}
-
-	public void addHomeworkAssignment(String note){
-		new HomeworkManager().addAssignment(note.substring(9));
+		else if(op == 1){
+			songRequest(note.substring(1));
+		}
 	}
 	
+	private void songRequest(String song){
+		Dirtrav dr = new Dirtrav("../../Volumes/Seagate/music");
+		ArrayList<File> alf = dr.traverseGrab(song, dr.getDir());
+		for(int i = 0; i < alf.size(); i++){
+			System.out.println("id: #" + i + "| " +alf.get(i).getName());
+			System.out.println(dr + "/" + alf.get(i).getName());
+		} 
+	}
+
+	public void addHomeworkAssignment(String note, int padding){
+		int size = (padding + "").length();
+		new HomeworkManager().addAssignment(note.substring(size));
+	}
+
 	public static void main(String[] args) {
 		new mainServer();
 	}
