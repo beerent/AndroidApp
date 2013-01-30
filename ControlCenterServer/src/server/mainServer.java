@@ -79,23 +79,23 @@ public class mainServer {
 		
 		if(op == 0){
 			if(note.endsWith("returnlist")){
-				out.write(new HomeworkManager().getList());
+				out.println(new HomeworkManager().getList());
 			}else{
 			addHomeworkAssignment(note, op);
 			out.println("added to Homework list.");
 			}	
 		}
 		else if(op == 1){
-			//songRequest(note.substring(2));
+			songRequest(note.substring(1));
 		}
 	}
 	
 	private void songRequest(String song){
-		Dirtrav dr = new Dirtrav("../../Volumes/Seagate");
-		ArrayList<File> alf = dr.traverseGrab("bigfiles", dr.getDir());
-		System.out.println("respond with id#, or anything else to cancel.");
+		Dirtrav dr = new Dirtrav("../../Volumes/Seagate/music");
+		ArrayList<File> alf = dr.traverseGrab(song, dr.getDir());
 		for(int i = 0; i < alf.size(); i++){
 			System.out.println("id: #" + i + "| " +alf.get(i).getName());
+			System.out.println(dr + "/" + alf.get(i).getName());
 		} 
 	}
 
