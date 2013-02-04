@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Timer;
 
@@ -24,10 +23,8 @@ public class HomeworkManager {
 	public void addAssignment(String newAssignment){
 		if(newAssignment.length() >= 1){ 
 			setAssignments();
-			if(!Arrays.asList(homeworkList).contains(newAssignment)){
-				homeworkList[size] = newAssignment;
-				writeAssignments();
-			}
+			homeworkList[size] = newAssignment;
+			writeAssignments();
 		}
 	}
 	
@@ -101,7 +98,7 @@ public class HomeworkManager {
 	}
 	
 	//method prints the entire list of homework
-	//thread sleeps for 1 minute (hard-coded)
+	//thread sleeps for 5 minutes (hard-coded)
 	private void displayHomework(){
 		File f;
 		Scanner sc;
@@ -111,8 +108,8 @@ public class HomeworkManager {
 				sc = new Scanner(f);
 				while(sc.hasNextLine()) System.out.println(sc.nextLine());
 				sc.close();
-		        Thread.sleep(10000);
-				for(int i = 0; i < 20; i++) System.out.println("");
+		        Thread.sleep(50000);
+				for(int i = 0; i < 10; i++) System.out.println("");
 			}catch(Exception e){
 				System.out.println("displayHomework() error");
 			}
